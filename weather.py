@@ -1,9 +1,8 @@
 import csv
-from datetime import datetime
+from datetime import datetime  # Import the datetime module
+
 
 DEGREE_SYMBOL = u"\N{DEGREE SIGN}C"
-
-
 def format_temperature(temp):
     """Takes a temperature and returns it in string format with the degrees
         and Celcius symbols.
@@ -11,21 +10,29 @@ def format_temperature(temp):
     Args:
         temp: A string representing a temperature.
     Returns:
-        A string contain the temperature and "degrees Celcius."
+        A string containing the temperature and "degrees Celcius."
     """
     return f"{temp}{DEGREE_SYMBOL}"
 
 
-def convert_date(iso_string):
-    """Converts and ISO formatted date into a human-readable format.
+
+def convert_date(iso_string):  # line 2
+    """Converts an ISO formatted date into a human-readable format.
 
     Args:
         iso_string: An ISO date string.
     Returns:
         A date formatted like: Weekday Date Month Year e.g. Tuesday 06 July 2021
     """
-    pass
+    # date_object = datetime.fromisoformat(iso_string)  # Convert string to datetime using strptime # line 10
+    date_object = datetime.fromisoformat(iso_string)
+    human_readable_date = date_object.strftime('%A %d %B %Y')  # Format date
+    return human_readable_date  # Return the formatted date
 
+# Test the function:
+result = convert_date("2021-07-05T07:00:00+08:00")  # Call the function and store the result
+print(f"{result}")  # Print the result to see the output # line 15
+        # expected_result = "Monday 05 July 2021"
 
 def convert_f_to_c(temp_in_fahrenheit):
     """Converts a temperature from Fahrenheit to Celcius.
@@ -44,9 +51,32 @@ def calculate_mean(weather_data):
     Args:
         weather_data: a list of numbers.
     Returns:
-        A float representing the mean value.
+        A float representing the mean value. 
     """
-    pass
+    
+    if len(weather_data) == 0:  # Check if the list is empty
+        return "list is empty, cannot divide by zero"
+    
+    # Check if all elements are numbers
+    numeric_data = []
+    for item in weather_data:
+        try:
+            numeric_data.append(float(item))  # Convert items to float
+        except (ValueError, TypeError):
+            return "All items in the list must be numbers"  # Error if an item is not a number
+
+    # Calculate mean: sum of numbers divided by the count of numbers
+    return sum(numeric_data) / len(numeric_data)  # Return mean of numeric data
+    
+   
+# test the function:
+  # Call the function and store the result
+my_mean = calculate_mean([45, 36, 38, 74, 99, 100, 101, 102, 103, 104])
+print(f'the mean is:{my_mean}')
+    
+  
+   
+    
 
 
 def load_data_from_csv(csv_file):
@@ -101,4 +131,4 @@ def generate_daily_summary(weather_data):
     Returns:
         A string containing the summary information.
     """
-    pass
+    
